@@ -1,0 +1,6 @@
+{
+  "name": "claude-uso-tokens",
+  "description": "uso-tokens: context, plan limits, Codex limits and cost in the Claude Code status line",
+  "owner": { "name": "wilson-romero" },
+  "plugins": [{ "name": "uso-tokens", "source": "./" }]
+}
