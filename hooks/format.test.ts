@@ -1,6 +1,6 @@
 import { expect, test } from 'claude-code/testing'
 
-import { accountFromConfig, crossed, planLabel, report, resetAt, statusLine, tokens } from './format'
+import { accountFromConfig, accountPart, maskEmail, crossed, planLabel, report, resetAt, statusLine, tokens } from './format'
 
 // 2026-10-19 06:00 UTC = 01:00 in Bogotá.
 const NOW = Date.parse('2026-10-19T06:00:00Z')
@@ -69,9 +69,15 @@ test('the account takes only email and plan from the config', () => {
   expect(accountFromConfig('{}')).toEqual({})
 })
 
+test('the email domain never reaches the screen', () => {
+  expect(maskEmail('persona@example.com')).toBe('persona@•••')
+  expect(maskEmail('sin-arroba')).toBe('sin-arroba')
+  expect(accountPart({ email: 'a.b@empresa.co', plan: 'Pro' })).not.toContain('empresa')
+})
+
 test('the account leads the status line and the report', () => {
   const account = { email: 'persona@example.com', plan: 'Max 5x' }
-  expect(statusLine({ window: 200_000 }, [], undefined, NOW, account)).toBe('persona@example.com Max 5x · ctx –/200k')
-  expect(report({ window: 200_000 }, [], undefined, NOW, null, account)).toContain('Cuenta: persona@example.com Max 5x')
+  expect(statusLine({ window: 200_000 }, [], undefined, NOW, account)).toBe('persona@••• Max 5x · ctx –/200k')
+  expect(report({ window: 200_000 }, [], undefined, NOW, null, account)).toContain('Cuenta: persona@••• Max 5x')
   expect(report({ window: 200_000 }, [], undefined, NOW)).toContain('Cuenta: no disponible')
 })

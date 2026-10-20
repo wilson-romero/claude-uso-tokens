@@ -38,9 +38,12 @@ export const accountFromConfig = (text: string): Account => {
   }
 }
 
+// The domain names the employer or the provider, so it stays out of screenshots.
+export const maskEmail = (email: string) => email.replace(/@.*$/, '@•••')
+
 export const accountPart = (account: Account | undefined) =>
   account && (account.email || account.plan)
-    ? [account.email, account.plan].filter(Boolean).join(' ')
+    ? [account.email && maskEmail(account.email), account.plan].filter(Boolean).join(' ')
     : undefined
 
 const pad = (n: number) => String(n).padStart(2, '0')
