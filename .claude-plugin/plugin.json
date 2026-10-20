@@ -1,6 +1,6 @@
 {
   "name": "uso-tokens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Status line with context-window usage, plan limits (5 h and weekly), Codex limits and session cost, plus a /uso command",
   "author": { "name": "wilson-romero" }
 }
